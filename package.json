@@ -1,0 +1,47 @@
+{
+  "name": "gift-city",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.0.18",
+    "@material-ui/styles": "^4.11.5",
+    "@mui/icons-material": "^5.14.16",
+    "@mui/material": "^5.14.16",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.4",
+    "@mui/styles": "^5.14.16",
+    "@nextui-org/react": "^2.1.13",
+    "animate.css": "^4.1.1",
+    "axios": "^1.6.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongodb": "^6.2.0",
+    "mongoose": "^8.0.0",
+    "mongose": "^0.0.2-security",
+    "next": "13.5.6",
+    "next-auth": "^4.24.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-icons": "^4.11.0",
+    "react-leaflet": "^4.2.1",
+    "react-responsive-carousel": "^3.2.23",
+    "styled-components": "^6.1.0",
+    "tailwind": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.34",
+    "autoprefixer": "^10",
+    "postcss": "^8",
+    "tailwindcss": "^3"
+  }
+}
