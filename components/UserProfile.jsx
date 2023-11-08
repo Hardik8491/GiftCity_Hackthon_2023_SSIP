@@ -1,6 +1,10 @@
+'use client'
+
 import React from "react";
+import useUser from "./hooks/useUser";
 
 const UserProfile = () => {
+  const {user}=useUser()
   return (
     <div className="bg-gray-100 h-screen flex flex-col items-center">
       <div className="bg-gray-500 h-40 w-full"></div>
@@ -8,7 +12,7 @@ const UserProfile = () => {
         <img
           height={200}
           width={200}
-          src="data:image/jpeg;base64,/your-image-data-here"
+          src={user?.img}
           className="border rounded-full"
           alt="User Profile"
         />

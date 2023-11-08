@@ -3,26 +3,17 @@ import { useEffect, useState } from 'react';
 import { signOut, signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import useUser from '../hooks/useUser';
 
 
 export default function UserInfo() {
   const { data: session } = useSession();
   const router = useRouter();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const email = session.user.email;  
-      
-    // Replace with the desired email
-    fetch(`/api/user?email=${email}`) // Pass email as a query parameter
-      .then((response) => response.json())
-      .then((data) => setUser(data))
-      .catch((error) => console.error(error));
-  }, []);
+  const {user}=useUser();
 
 
   const handleSignIn = async () => {
-    router.push("/Login");
+    // router.push("/Login");
   };
 
   return (
@@ -32,7 +23,7 @@ export default function UserInfo() {
           <>
             <div className="flex flex-col items-start gap-2">
              <div> UserName:<span className="font-bold">{" "} {user?.username}</span></div>
-             <div>   Email: <span className="font-bold">{session.user.email}</span></div>
+             <div>   Email: <span className="font-bold">{user?.email}</span></div>
            
             </div>
             <button
@@ -40,6 +31,7 @@ export default function UserInfo() {
               className="bg-red-500 text-white font-bold px-6 py-2 mt-3">
               Log Out
             </button>
+            {/* <button onClick={router.push('/Profile')} >Profile</button> */}
           </>
         ) : (
           <button
@@ -48,8 +40,12 @@ export default function UserInfo() {
             Sign In
           </button>
         )}
+       
+   
+
+         
       </div>
-      <button onClick={router.push('/Profile')} >Profile</button>
+   
     </div>
   );
 }

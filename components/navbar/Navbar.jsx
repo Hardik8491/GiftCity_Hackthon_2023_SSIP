@@ -5,6 +5,7 @@ import { FaBars, FaUser } from "react-icons/fa"; // Import the menu icon from re
 import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import UserInfo from "../UserData/UserInfo";
+import useUser from "../hooks/useUser";
 
 const Navbar = () => {
   
@@ -17,6 +18,8 @@ const Navbar = () => {
   ];
   const {data:session}=useSession();
 
+  const {user}= useUser()
+ 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currTab, setCurrTab] = useState("Home");
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -87,8 +90,18 @@ const Navbar = () => {
       </div>
       <div className="ml-4  font-medium text-xl px-6 cursor-pointer text-black">
         {session ? (
-          <button onClick={toggleProfileMenu} className="border p-4 rounded-full ">
-            <FaUser className="" />
+          <button onClick={toggleProfileMenu} className=" flex items-center rounded-full ">
+            {/* <FaUser className="" /> */}
+            {/* <div className=""> */}
+        <img
+          height={40}
+          width={40}
+          src={user?.img}
+          className="border rounded-full"
+          alt="User"
+        />
+      {/* </div> */}
+
           </button>
         ) : (
           <button onClick={toggleLoginStatus}>
@@ -96,17 +109,9 @@ const Navbar = () => {
           </button>
         )}
         {isProfileMenuOpen && (
-          <ul className="bg-white p-2 border-b-2 border-gray-600 absolute z-10 right-0 mt-2 ">
+          <ul className="bg-white p-2 mr-3 border-b-2 border-gray-600 absolute z-10 right-0  ">
             <UserInfo/>
-{/*             
-             <li>
-              <Link href="/Profile">Profile</Link>
-            </li>
-            <li onClick={toggleProfileMenu}>
-              <Link onClick={toggleLoginStatus} href="/">
-                Logout
-              </Link>
-            </li>  */}
+
           </ul>
         )}
       </div>

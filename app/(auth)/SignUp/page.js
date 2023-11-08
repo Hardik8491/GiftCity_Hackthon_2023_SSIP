@@ -1,5 +1,5 @@
 "use client";
-
+import axios from "axios";
 import Image from "next/image";
 // import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -14,70 +14,38 @@ const SignUp = () => {
 
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [img, setImg] = useState();
+  const router=useRouter()
 
-  const initialState = {
-    email: "",
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      
+      const reader = new FileReader();
+      
 
-    password: "",
-    confirmPassword: "",
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImg(reader.result);
+        }
+      };
+      reader.readAsDataURL(e.target.files[0])
+    }
   };
-  const router = useRouter();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.")
-         return;
+    const data={
+      username,email,password,img
     }
-   else  if (isSignUp) {
-      if (!username ||!email || !password) {
-        alert("All fields are necessary.");
-        return;
+    await axios.post('/api/register',data,{
+      headers:{
+        "Content-Type":"application/json"
       }
-    } 
-      try {
-        const resUserExists = await fetch("api/existUser", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        });
-  
-        const { user } = await resUserExists.json();
-  
-        if (user) {
-          alert("User already exists.");
-          return;
-        }
-  
-        const res = await fetch("api/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username,
-            email,
-            password,
-            confirmPassword,
-          }),
-        });
-  
-        if (res.ok) {
-          const form = e.target;
-          form.reset();
-          router.push("/");
-        } else {
-          console.log("User registration failed.");
-        }
-      } catch (error) {
-        console.log("Error during registration: ", error);
-      }
-    
+    }).then(()=>{
+      router.push('/Login')
 
-   
+    }).catch((error)=>{console.log(error);})
   };
+
   return (
     <div>
       <div>
@@ -97,7 +65,7 @@ const SignUp = () => {
 
           <div className="mt-10 items-center sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6" onSubmit={handleSubmit}>
-            <div>
+              <div>
                 <label
                   htmlFor="email"
                   className="block text-sm font-medium leading-6 text-gray-900">
@@ -179,8 +147,23 @@ const SignUp = () => {
                   />
                 </div>
               </div>
-                    
-             
+              <div>
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium leading-6 text-gray-900">
+                    Profile Image
+                  </label>
+                </div>
+                <div className="mt-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="flex gap-3"
+                    onChange={handleFileChange}
+                  />
+                </div>
+              </div>
 
               <div>
                 <button
@@ -197,4 +180,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp
+export default SignUp;

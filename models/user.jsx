@@ -16,6 +16,13 @@ const userSchema = new Schema(
       require: true,
       select: false,
     },
+    img:{
+      type:String,
+      
+    },
+    public_id:{
+      type:String
+    }
   },
   { timestamps: true }
 );
@@ -23,4 +30,4 @@ const User = models?.User || mongoose.model("User", userSchema);
 
 export default User;
 
-// mobile sndown thai gayou
+
